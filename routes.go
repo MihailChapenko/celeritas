@@ -3,7 +3,6 @@ package celeritas
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"io"
 	"net/http"
 )
 
@@ -17,10 +16,6 @@ func (c *Celeritas) routes() http.Handler {
 	}
 
 	mux.Use(middleware.Recoverer)
-
-	mux.Get("/ping", func(w http.ResponseWriter, _ *http.Request) {
-		io.WriteString(w, "Pong!\n")
-	})
 
 	return mux
 }
