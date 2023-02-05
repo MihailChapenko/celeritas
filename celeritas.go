@@ -1,7 +1,6 @@
 package celeritas
 
 import (
-	"database/sql"
 	"fmt"
 	"github.com/CloudyKit/jet/v6"
 	"github.com/MihailChapenko/celeritas/render"
@@ -65,7 +64,7 @@ func (c *Celeritas) New(rootPath string) error {
 	infoLog, errorLog := c.startLoggers()
 
 	if os.Getenv("DATABASE_TYPE") != "" {
-		db, err := sql.Open(os.Getenv("DATABASE_TYPE"), c.BuildDSN())
+		db, err := c.OpenDB(os.Getenv("DATABASE_TYPE"), c.BuildDSN())
 		if err != nil {
 			errorLog.Println("database connection error:", err)
 			os.Exit(1)
