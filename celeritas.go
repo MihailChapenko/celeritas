@@ -75,6 +75,8 @@ func (c *Celeritas) New(rootPath string) error {
 			DataType: os.Getenv("DATABASE_TYPE"),
 			Pool:     db,
 		}
+
+		defer db.Close()
 	}
 
 	c.InfoLog = infoLog
@@ -94,6 +96,10 @@ func (c *Celeritas) New(rootPath string) error {
 			domain:   os.Getenv("COOKIE_DOMAIN"),
 		},
 		sessionType: os.Getenv("SESSION_TYPE"),
+		database: databaseConfig{
+			dsn:      c.BuildDSN(),
+			database: os.Getenv("DATABASE_TYPE"),
+		},
 	}
 
 	sess := session.Session{
